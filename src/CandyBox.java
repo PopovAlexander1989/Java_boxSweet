@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class CandyBox implements GiftBox {
     private ArrayList<Sweet> sweets = new ArrayList<>();
@@ -38,14 +38,17 @@ public class CandyBox implements GiftBox {
         System.out.println("Содержимое коробки:");
         for (int i = 0; i < sweets.size(); i++) {
             Sweet sweet = sweets.get(i);
-            String details = "Вес: " + sweet.getWeight() + " гр., Цена: " + sweet.getPrice() + "руб., Уникальный параметр: " + sweet.getUniqueParameter();
-            System.out.println((i + 1) + ". " + sweet.getName() + " - " + details);
+            String fullDetails = sweet.toString();
+            int uniqueStart = fullDetails.lastIndexOf(", ") + 2;
+            String baseDetails = sweet.getName() + " - Вес: " + sweet.getWeight() + "г, Цена: " + sweet.getPrice() + "р";
+            String uniqueParam = (uniqueStart > 0 && uniqueStart < fullDetails.length()) ? fullDetails.substring(uniqueStart).trim() : "";
+            System.out.println((i + 1) + ". " + baseDetails + (uniqueParam.isEmpty() ? "" : ", Уникальный параметр: " + uniqueParam));
         }
     }
 
     @Override
     public void optimizeByWeight(double maxWeight) {
-        while (getTotalWeight() > maxWeight && sweets.size() > 1) {
+        while (getTotalWeight() > maxWeight && !sweets.isEmpty()) {
             Sweet lightest = sweets.get(0);
             int lightestIndex = 0;
             for (int i = 1; i < sweets.size(); i++) {
@@ -60,7 +63,7 @@ public class CandyBox implements GiftBox {
 
     @Override
     public void optimizeByPrice(double maxWeight) {
-        while (getTotalWeight() > maxWeight && sweets.size() > 1) {
+        while (getTotalWeight() > maxWeight && !sweets.isEmpty()) {
             Sweet cheapest = sweets.get(0);
             int cheapestIndex = 0;
             for (int i = 1; i < sweets.size(); i++) {

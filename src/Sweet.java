@@ -4,11 +4,10 @@ public abstract class Sweet {
     protected double price;
     protected String uniqueParameter;
 
-    public Sweet(String name, double weight, double price, String uniqueParameter) {
+    public Sweet(String name, double weight, double price) {
         this.name = name;
         this.weight = weight > 0 ? weight : 0;
         this.price = price > 0 ? price : 0;
-        this.uniqueParameter = uniqueParameter;
     }
 
     public String getName() {
@@ -29,6 +28,6 @@ public abstract class Sweet {
 
     @Override
     public String toString() {
-        return "Название: " + name + ", Вес: " + weight + " гр., Цена: " + price + " руб., Уникальный параметр: " + uniqueParameter;
+        return "Название: " + name + ", Вес: " + weight + " гр., Цена: " + price + " руб.";
     }
 }
